@@ -1,6 +1,7 @@
 let fs =require('fs');
 let path =require('path');
 let math3d =require('math3d');
+let inputName = 'desc.map';
 let map = fs.readFileSync(path.join(__dirname,'desc.map')).toString('utf8');
 Array.prototype.distinct = function (){
     var arr = this,
@@ -167,6 +168,10 @@ class boxMerger{
         nearFaces: [ 6, 7, 8 ] block's id
      */
 
+    tryMergeBox(block){
+
+    }
+
     findNearFaces(){
         for(let i=0;i<this.jsonMap.length;i++){
             let item=this.jsonMap[i];
@@ -237,7 +242,9 @@ class boxMerger{
         this.extractBlockValidFace();
         this.buildLines();
         this.findNearFaces();
+        this.kill();
         console.log(`this.jsonMap :`,this.jsonMap[2].blocks[0]);
+        fs.writeFileSync(path.join(__dirname,`out_${inputName}`),JSON.stringify(this.jsonMap));
     };
 }
 let merger = new boxMerger(map);
